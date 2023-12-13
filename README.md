@@ -2,8 +2,8 @@
 
 Team:
 
-* Warren C. Longmire - Hats
-* Person 2 - Which microservice?
+* Richard A Hofmann-Warner - Hats
+* Austin Kim - Shoes
 
 ## Design
 
