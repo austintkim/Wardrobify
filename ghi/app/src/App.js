@@ -11,7 +11,8 @@ function App() {
       <div className="container">
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path="hats" element={<HatsList />}>
+          <Route path="hats">
+            <Route index element={<HatsList />} />
             <Route path="new" element={<HatForm />} />
           </Route>
         </Routes>

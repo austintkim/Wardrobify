@@ -35,16 +35,16 @@ function HatsList() {
 
     return (
         <div>
-        <h1>Hats</h1>
+            <h1>Hats</h1>
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th>style_name</th>
-                        <th>fabric</th>
-                        <th>color</th>
-                        <th>hat_picture_url</th>
-                        <th>location</th>
-                        <th>Closet</th>
+                        <th>Style Name</th>
+                        <th>Fabric</th>
+                        <th>Color</th>
+                        <th>Hat Picture</th>
+                        <th>Shelf Number</th>
+                        <th>Closet Name</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -57,14 +57,15 @@ function HatsList() {
                                 <td>
                                     <img src={hat.hat_picture_url} alt = {hat.style_name} width = "50" height="50"></img>
                                 </td>
-                                <td>{hat.location}</td>
-                                {/* <td>{hat.location.closet_name}</td> */}
+                                <td>{hat.location.shelf_number}</td>
+                                <td>{hat.location.closet_name}</td>
                                 <td><button onClick={()=> {
                                     handleDelete(hat.id)
                                 }} className="btn btn-danger">Delete</button></td>
                             </tr>
                         );
                     })}
+                    
                 </tbody>
             </table>
         </div>

@@ -14,6 +14,8 @@ django.setup()
 # adsfasdfasfaf
 from hats_rest.models import LocationVO
 
+#  this creates the LocationVO for database
+
 
 def get_locations():
     url = "http://wardrobe-api:8000/api/locations/"
@@ -22,15 +24,17 @@ def get_locations():
     for location in content["locations"]:
         LocationVO.objects.update_or_create(
             import_href=location["href"],
-            defaults={"closet_name": location["closet_name"]},
+            defaults={"closet_name": location["closet_name"],
+                      "shelf_number": location["shelf_number"]},
         )
+    # print(content)
 
 
 def poll():
     while True:
         print('Hats poller polling for data')
         try:
-            get_conferences()
+            get_locations()
             pass
         except Exception as e:
             print(e, file=sys.stderr)
