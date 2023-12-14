@@ -8,12 +8,22 @@ from .models import Hat, LocationVO
 
 class LocationVODetailEncoder(ModelEncoder):
     model = LocationVO
-    properties = ["closet_name", "import_href", "id"]
+    properties = ["import_href", "id",  "style_name"]
 
 
 class HatListEncoder(ModelEncoder):
     model = Hat
-    properties = ["style_name", "id"]
+    properties = [
+        # "fabric",
+        "style_name", 
+        # "color",
+        # "hat_picture_url",
+        # "location",
+        "id"
+        ]
+    
+    # def get_extra_data(self, o):
+    #     return {"location": o.location.id}
 
 
 class HatDetailEncoder(ModelEncoder):
@@ -22,16 +32,17 @@ class HatDetailEncoder(ModelEncoder):
         "fabric",
         "style_name",
         "color",
-        "hat_url",
-        "location"
+        "hat_picture_url",
+        "location",
+        # "id"
     ]
     encoders = {
         "location": LocationVODetailEncoder(),
     }
 
 
-@require_http_methods(["GET", "POST", "DELETE"])
-def api_list_hats(request, location_vo_id):
+@require_http_methods(["GET", "POST"])
+def api_list_hats(request, location_vo_id=None):
     if request.method == "GET":
         if location_vo_id is not None:
             hats = Hat.objects.filter(location=location_vo_id)
@@ -41,11 +52,11 @@ def api_list_hats(request, location_vo_id):
             {"hats": hats},
             encoder=HatListEncoder,
         )
-    elif request.method == "POST":
+    else:
         content = json.loads(request.body)
         # Get the location object and put it in the content dict
         try:
-            location_href = f"/api/locations/{location_vo_id}/"
+            location_href = content["location"]
             location = LocationVO.objects.get(import_href=location_href)
             content["location"] = location
         except LocationVO.DoesNotExist:
@@ -53,27 +64,17 @@ def api_list_hats(request, location_vo_id):
                 {"message": "Invalid location id"},
                 status=400,
             )
-
+# f"/api/locations/{location_vo_id}/"
         hat = Hat.objects.create(**content)
         return JsonResponse(
             hat,
             encoder=HatDetailEncoder,
             safe=False,
         )
-    else:
-        try:
-            hat = Hat.objects.get(id=location_vo_id)
-            hat.delete()
-            return JsonResponse(
-                hat,
-                encoder=HatDetailEncoder,
-                safe=False,
-                )
-        except Hat.DoesNotExist:
-            return JsonResponse({"message": "Does not exist"})
+    
 
 
-@require_http_methods(["GET"])
+@require_http_methods(["GET", "DELETE"])
 def api_show_hat(request, pk):
     if request.method == "GET":
         hat = Hat.objects.get(id=pk)
@@ -82,5 +83,15 @@ def api_show_hat(request, pk):
             encoder=HatDetailEncoder,
             safe=False,
         )
-    
+    else:
+        try:
+            hat = Hat.objects.get(id=pk)
+            hat.delete()
+            return JsonResponse(
+                hat,
+                encoder=HatDetailEncoder,
+                safe=False,
+                )
+        except Hat.DoesNotExist:
+            return JsonResponse({"message": "Does not exist"})
 
