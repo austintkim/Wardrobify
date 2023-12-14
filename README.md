@@ -23,7 +23,7 @@ The BinVO model is a value object designed so that for each Bin object added to 
 We use a Shoe Poller to access each bin that has been created in the database and to create a corresponding BinVO, bridging the gap between our shoes and wardrobe microservices and allowing each Shoe object to track the properties of interest (explicitly defined in our BinVO model) of whatever bin we assign it to.
 
 
-
+HELLO!!!
 
 ## Hats microservice
 
