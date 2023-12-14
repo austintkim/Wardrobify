@@ -1,17 +1,23 @@
 import React, {useState, useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
+
+const initialData = {
+  fabric: "",
+  style_name: "",
+  color: "",
+  hat_picture_url: "",
+  location:"",
+}
+
 
 function HatsForm() {
-  const [hats, setHats] = useState([])
-  const [locations, setLocations] = useState([])
-  const [formData, setFormData] = useState({
-    fabric: "",
-    style_name: "",
-    color: "",
-    hat_picture_url: "",
-  })
+  const navigate = useNavigate();
+  const [CreatedHat, setCreatedHat] = useState([false]);
+  const [locations, setLocations] = useState([]);
+  const [formData, setFormData] = useState(initialData);
 
-  const getLocationData = async () => {
-    const url = 'http://localhost:8100/api/locations/';
+  const getHatData = async () => {
+    const url = 'http://localhost:8090/api/hats/';
     const response = await fetch(url);
 
     if (response.ok) {
@@ -21,14 +27,14 @@ function HatsForm() {
   }
 
   useEffect(() => {
-    getLocationData();
+    getHatData();
   }, []);
 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const locationUrl = 'http://localhost:8090/api/hats/';
+    const hatUrl = 'http://localhost:8090/api/hats/';
 
     const fetchConfig = {
       method: "post",
@@ -38,49 +44,74 @@ function HatsForm() {
       },
     };
 
-    const response = await fetch(locationUrl, fetchConfig);
+    const response = await fetch(hatUrl, fetchConfig);
 
     if (response.ok) {
-        setFormData({
-            fabric: "",
-            style_name: "",
-            color: "",
-            hat_picture_url: "",
-        });
+        setFormData(initialData)
+        setCreatedHat(true);
       }
   }
 
   const handleFormChange = (event) => {
-    const value = event.target.value;
-    const inputName = event.target.name;
-    setFormData({
-      //Previous form data is spread (i.e. copied) into our new state object
-      ...formData,
-
-      //On top of the that data, we add the currently engaged input key and value
-      [inputName]: value 
-    });
+    setFormData ({... formData, 
+      [event.target.name]: event.target.value
+    })
   }
+
+// CSS classes for rendering
+let spinnerClasses = 'd-flex justify-content-center mb-3';
+let dropdownClasses = 'form-select d-none';
+if (locations.length > 0) {
+  spinnerClasses = 'd-flex justify-content-center mb-3 d-none';
+  dropdownClasses = 'form-select';
+}
+
+let messageClasses = 'alert alert-success d-none mb-0';
+let formClasses = '';
+if (CreatedHat) {
+  messageClasses = 'alert alert-success mb-0';
+  formClasses = 'd-none';
+}
+
+
   return (
-    <div className="row">
-      <div className="offset-3 col-6">
-        <div className="shadow p-4 mt-4">
-          <h1>Create a new hat</h1>
-          <form onSubmit={handleSubmit} id="create-conference-form">
-            <div className="form-floating mb-3">
-              <input onChange={handleFormChange} value={formData.style_name} placeholder="style_name" required type="text" name="style_name" id="style_name" className="form-control" />
-              <label htmlFor="style_name">Style Name</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input onChange={handleFormChange} value={formData.fabric} placeholder="fabric" required type="text" name="fabric" id="fabric" className="form-control" />
-              <label htmlFor="fabric">Fabric</label>
-            </div>
-            <div className="form-floating mb-3">
-              <input onChange={handleFormChange} value={formData.color} placeholder="color" required type="text" name="color" id="color" className="form-control" />
-              <label htmlFor="color">Fabric</label>
-            </div>
-            <button className="btn btn-primary">Create Hat</button>
-          </form>
+    <div className="container">
+      <div className="row">
+        <div className="offset-3 col-6">
+          <div className="shadow p-4 mt-4">
+            <h1>Create a new hat</h1>
+            <form onSubmit={handleSubmit} id="create-hat-form">
+              <div className="form-floating mb-3">
+                <input onChange={handleFormChange} value={formData.style_name} placeholder="style_name" required type="text" name="style_name" id="style_name" className="form-control" />
+                <label htmlFor="style_name">Style Name</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input onChange={handleFormChange} value={formData.fabric} placeholder="fabric" required type="text" name="fabric" id="fabric" className="form-control" />
+                <label htmlFor="fabric">Fabric</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input onChange={handleFormChange} value={formData.color} placeholder="color" required type="text" name="color" id="color" className="form-control" />
+                <label htmlFor="color">Fabric</label>
+              </div>
+              <div className="form-floating mb-3">
+                        <input onChange={handleFormChange} placeholder="hat_picture_url" required type="url" name = "hat_picture_url" id="hat_picture_url" className="form-control" value={formData.hat_picture_url}/>
+                        <label htmlFor="hat_picture_url">Picture Url</label>
+              </div>
+              <div className="mb-3">
+                  <select onChange={handleFormChange}required name = "location" id="location" className={dropdownClasses}>
+                    <option value="">Choose a location</option>
+                    {locations.map(location => {
+                        return (
+                            <option key={location.href} value={location.href}>
+                                {location.closet_name}
+                            </option>
+                        )
+                    })}
+                  </select>
+                </div>
+              <button className="btn btn-primary">Create Hat</button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

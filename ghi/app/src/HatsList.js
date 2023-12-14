@@ -27,28 +27,47 @@ function HatsList() {
         return <div>Error: {error}</div>;
     }
 
+    const handleDelete = async (id) => {
+        const request = await fetch(`http://localhost:8080/api/hats/${id}`, { method: "DELETE"});
+        const resp = await request.json();
+        getHatsData();
+      }
+
     return (
-        <table className="table table-striped">
-            <thead>
-                <tr>
-                    <th>Hat</th>
-                </tr>
-            </thead>
-            <tbody>
-                {hats.map(hat => {
-                    return (
-                        <tr key={hat.id}>
-                            <td>{hat.import_href}</td>
-                            <td>{hat.id}</td>
-                            <td>{hat.style_name}</td>
-                            <td>{hat.fabric}</td>
-                            <td>{hat.color}</td>
-                            <td>{hat.location}</td>
-                        </tr>
-                    );
-                })}
-            </tbody>
-        </table>
+        <div>
+        <h1>Hats</h1>
+            <table className="table table-striped">
+                <thead>
+                    <tr>
+                        <th>style_name</th>
+                        <th>fabric</th>
+                        <th>color</th>
+                        <th>hat_picture_url</th>
+                        <th>location</th>
+                        <th>Closet</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {hats.map(hat => {
+                        return (
+                            <tr key={hat.id}>
+                                <td>{hat.style_name}</td>
+                                <td>{hat.fabric}</td>
+                                <td>{hat.color}</td>
+                                <td>
+                                    <img src={hat.hat_picture_url} alt = {hat.style_name} width = "50" height="50"></img>
+                                </td>
+                                <td>{hat.location}</td>
+                                {/* <td>{hat.location.closet_name}</td> */}
+                                <td><button onClick={()=> {
+                                    handleDelete(hat.id)
+                                }} className="btn btn-danger">Delete</button></td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 }
 

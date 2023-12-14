@@ -8,7 +8,7 @@ from .models import Hat, LocationVO
 
 class LocationVODetailEncoder(ModelEncoder):
     model = LocationVO
-    properties = ["import_href", "id",  "style_name"]
+    properties = ["import_href", "id", "closet_name", "shelf_number", "style_name"]
 
 
 class HatListEncoder(ModelEncoder):
@@ -34,6 +34,8 @@ class HatDetailEncoder(ModelEncoder):
         "color",
         "hat_picture_url",
         "location",
+        "closet_name",
+        "shelf_number",
         # "id"
     ]
     encoders = {
