@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import React from 'react';
 
 function Nav() {
   return (
@@ -21,6 +22,9 @@ function Nav() {
             </li>
             <li className="nav-item">
               <NavLink className="nav-link" to="/hats">Hats</NavLink>
+            </li>
+            <li className="nav-item">
+              <NavLink className="nav-link" to="/hats/new">Create a hat</NavLink>
             </li>
           </ul>
         </div>
