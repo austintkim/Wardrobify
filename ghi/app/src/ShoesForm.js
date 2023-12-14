@@ -108,11 +108,11 @@ function ShoesForm() {
                     </div>
                 <div className="mb-3">
                   <select onChange={handleFormChange}required name = "bin" id="bin" className={dropdownClasses}>
-                    <option value="">Choose a bin</option>
+                    <option value="">Choose a bin number</option>
                     {bins.map(bin => {
                         return (
                             <option key={bin.href} value={bin.href}>
-                                {bin.closet_name}
+                                {bin.id}
                             </option>
                         )
                     })}

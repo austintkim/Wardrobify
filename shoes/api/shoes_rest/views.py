@@ -7,7 +7,7 @@ from .models import Shoes, BinVO
 
 class BinVODetailEncoder(ModelEncoder):
     model = BinVO
-    properties = ["closet_name", "import_href", "id"]
+    properties = ["bin_number", "closet_name", "import_href", "id"]
 
 class ShoesListEncoder(ModelEncoder):
     model = Shoes

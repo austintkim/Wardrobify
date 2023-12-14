@@ -33,7 +33,7 @@ function ShoesList() {
             <th>Manufacturer</th>
             <th>Color</th>
             <th>Picture</th>
-            <th>Bin</th>
+            <th>Bin #</th>
             <th>Closet</th>
           </tr>
         </thead>
@@ -48,7 +48,7 @@ function ShoesList() {
                 <td>
                     <img src={shoe.picture_url} alt = {shoe.model_name} width = "50" height="50"></img>
                 </td>
-                <td>{shoe.bin.id}</td>
+                <td>{shoe.bin.bin_number}</td>
                 <td>{shoe.bin.closet_name}</td>
                 <td><button onClick={()=> {
                     handleDelete(shoe.id)

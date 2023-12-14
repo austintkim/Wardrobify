@@ -20,6 +20,7 @@ def get_bins():
             import_href=bin["href"],
             defaults={
                 "closet_name": bin["closet_name"],
+                "bin_number": bin["bin_number"]
                 },
         )
 
