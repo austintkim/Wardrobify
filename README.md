@@ -27,5 +27,4 @@ HELLO!!!
 
 ## Hats microservice
 
-Explain your models and integration with the wardrobe
-microservice, here.
+The models for the Hats Microservice are created from the Wardrobe’s models. The Wardrobe’s models were used to develop two models in the Hats Microservice to meet the project goals. Firstly, the Locations Value Object (VO) pulls from the Wardrobes database with a poller. The second model was a Hat model, which creates hats for the microservice via views.py and makes hats in the microservice’s database. The two models, Hat and LocationsVO, are then set up to provide the Main page with Hats from the Hats Microservice via the database. 
