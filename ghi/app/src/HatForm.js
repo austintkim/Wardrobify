@@ -44,8 +44,8 @@ function HatsForm() {
 
 
     const handleSubmit = async (event) => {
-      
       event.preventDefault();
+      
       const newErrors = {};
       if (!formData.color) newErrors.color = 'Color is required';
       if (!formData.hat_picture_url) newErrors.hat_picture_url = 'Picture URL is required';
@@ -55,8 +55,9 @@ function HatsForm() {
         setErrors(newErrors);
         return;
       }
-      document.querySelector("[name='location']").required = true;
+
       const hatUrl = 'http://localhost:8090/api/hats/';
+
       const fetchConfig = {
         method: "post",
         body: JSON.stringify(formData),
@@ -71,8 +72,8 @@ function HatsForm() {
           setFormData(initialData)
           setCreatedHat(true);
         }
-      
-    } 
+        
+    }
 
     const handleFormChange = (event) => {
       setFormData ({...formData, 

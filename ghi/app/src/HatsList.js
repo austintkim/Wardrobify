@@ -28,7 +28,7 @@ function HatsList() {
     }
 
     const handleDelete = async (id) => {
-        const request = await fetch(`http://localhost:8080/api/hats/${id}`, { method: "DELETE"});
+        const request = await fetch(`http://localhost:8090/api/hats/${id}`, { method: "DELETE"});
         const resp = await request.json();
         getHatsData();
       }
@@ -59,8 +59,7 @@ function HatsList() {
                                 </td>
                                 <td>{hat.location.shelf_number}</td>
                                 <td>{hat.location.closet_name}</td>
-                                <td><button onClick={()=> {
-                                    handleDelete(hat.id)
+                                <td><button onClick={()=> { handleDelete(hat.id)
                                 }} className="btn btn-danger">Delete</button></td>
                             </tr>
                         );
