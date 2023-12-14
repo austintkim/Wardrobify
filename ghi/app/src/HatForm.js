@@ -28,16 +28,6 @@ function HatsForm() {
     }
 }  
   
-  // const getHatData = async () => {
-  //     const url = 'http://localhost:8090/api/hats/';
-  //     const response = await fetch(url);
-
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       setLocations(data.locations);
-  //     }
-  //   }
-
     useEffect(() => {
       getLocationData();
     }, []);
