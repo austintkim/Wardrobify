@@ -16,6 +16,7 @@ class ShoesListEncoder(ModelEncoder):
 class ShoesDetailEncoder(ModelEncoder):
     model = Shoes
     properties = [
+        "id",
         "model_name",
         "manufacturer",
         "color",
@@ -35,7 +36,7 @@ def list_shoes(request, bin_vo_id=None):
             shoes = Shoes.objects.all()
         return JsonResponse(
             {"shoes": shoes},
-            encoder=ShoesListEncoder
+            encoder=ShoesDetailEncoder
         )
     else:
         content = json.loads(request.body)
