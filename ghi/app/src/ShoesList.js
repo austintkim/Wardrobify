@@ -2,6 +2,7 @@ import {useState, useEffect} from 'react';
 
 function ShoesList() {
   const [shoes, setShoes] = useState([]);
+  const [deletedShoe, setDeletedShoe] = useState(false);
 
   const getData = async () => {
     const request = await fetch('http://localhost:8080/api/shoes/');
@@ -9,7 +10,7 @@ function ShoesList() {
       const resp = await request.json();
       setShoes(resp.shoes);
     } else {
-      console.error("Request Error");
+      throw new Error("Failed to retrieve shoes data");
     }
   }
 
@@ -20,7 +21,13 @@ function ShoesList() {
   const handleDelete = async (id) => {
     const request = await fetch(`http://localhost:8080/api/shoes/${id}`, { method: "DELETE"});
     const resp = await request.json();
+    setDeletedShoe(true);
     getData();
+  }
+
+  let messageClasses = 'alert alert-danger d-none mb-0';
+  if (deletedShoe) {
+    messageClasses = 'alert alert-danger mb-0';
   }
 
   return(
@@ -40,7 +47,6 @@ function ShoesList() {
         <tbody>
           {
             shoes.sort((a,b) => (a.id-b.id)).map(shoe => {
-              console.log(shoes)
               return(<tr key={shoe.id}>
                 <td>{shoe.model_name}</td>
                 <td>{shoe.manufacturer}</td>
@@ -58,6 +64,9 @@ function ShoesList() {
           }
         </tbody>
       </table>
+      <div className={messageClasses} id="danger-message">
+          We hope you didn't need that shoe...
+      </div>
     </div>
     );
 }

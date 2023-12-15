@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from "react-router-dom";
 
 const initialData = {
   model_name:"",
@@ -11,7 +10,6 @@ const initialData = {
 }
 
 function ShoesForm() {
-    const navigate = useNavigate();
 
     const [bins, setBins] = useState([]);
 
@@ -27,6 +25,8 @@ function ShoesForm() {
         if (response.ok) {
             const data = await response.json();
             setBins(data.bins);
+        } else {
+          throw new Error('Failed to retrieve bins data')
         }
     }
 
@@ -57,9 +57,10 @@ function ShoesForm() {
       const response = await fetch(shoeUrl, fetchConfig);
 
       if (response.ok) {
-          // navigate("/attendees")
           setFormData(initialData)
           setCreatedShoe(true);
+      } else {
+        throw new Error('Failed to create shoe')
       }
   }
 
