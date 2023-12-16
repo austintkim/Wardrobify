@@ -26,9 +26,17 @@ Team:
 
 **Diagram of Bounded Contexts:**
 
+```
+
 https://files.slack.com/files-pri/T03S39PU5HS-F069ZEQS09H/image.png
 
 Note: Port numbers in the API endpoints displayed in the diagram for hats and shoes should be swapped
+
+```
+
+**High level design:**
+
+```
 
 Wardrobify is made up of 3 microservices (bounded contexts) interacting with each other and a postgres database for each:
 
@@ -36,12 +44,18 @@ Wardrobify is made up of 3 microservices (bounded contexts) interacting with eac
 - *Shoes*
 - *Hats*
 
+```
+
 ## Shoes microservice
 
 Explain your models and integration with the wardrobe
 microservice, here.
 
 Austin:
+
+**Models Description:**
+
+```
 
 I created two models Shoes and BinVO.
 
@@ -61,7 +75,11 @@ We use a Shoe Poller to access each bin that has been created in the database an
 
 In order to interact with the wardrobe microservice and its database there were data encoders written and accessed by view functions in shoes.api.shoes_rest_api_views.
 
+```
+
 **API Endpoints**
+
+```
 | Action | Method | URL
 | ---------- | ---------- | ----------
 | List Shoes | GET | http://localhost:8080/api/shoes/
@@ -73,7 +91,8 @@ In order to interact with the wardrobe microservice and its database there were 
 | Delete a specific Shoe | DELETE | http://localhost:8080/api/shoes/id/
 ------------------------------------------------------
 | Update the details of a specific Shoe | PUT | http://localhost:8080/api/shoes/id/
-**API Endpoints**
+
+```
 
 *When requesting the list of shoes in the database, the JSON response will look like this:*
 ```
