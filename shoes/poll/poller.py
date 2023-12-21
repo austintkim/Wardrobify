@@ -23,6 +23,7 @@ def get_bins():
                 },
         )
 
+
 def poll():
     while True:
         print('Shoes poller polling for data')

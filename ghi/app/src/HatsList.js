@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 function HatsList() {
     const [hats, setHats] = useState([]);
     const [error, setError] = useState(null);
-
+    const [message, setMessage] = useState("");
     const getHatsData = async () => {
         try {
             const response = await fetch('http://localhost:8090/api/hats/');
@@ -31,7 +31,8 @@ function HatsList() {
         const request = await fetch(`http://localhost:8090/api/hats/${id}`, { method: "DELETE"});
         const resp = await request.json();
         getHatsData();
-      }
+    setMessage("Hat deleted successfully!");
+    }
 
     return (
         <div>

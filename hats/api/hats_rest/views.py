@@ -74,7 +74,7 @@ def api_list_hats(request, location_vo_id=None):
         )
 
 
-@require_http_methods(["GET", "DELETE", "PUT"])
+@require_http_methods(["GET", "DELETE", "PUT"]) 
 def api_show_hat(request, pk):
     """
     Retrieve, update or delete a hat.
